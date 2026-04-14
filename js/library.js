@@ -31,7 +31,7 @@ function processCSV(results) {
     if(cleanType === 'Sectional' && w > d) { isL = true; leg = 35; }
     if((cleanType === 'Desk' || tStr.toLowerCase().includes('l-shaped')) && w >= 55) { isL = true; leg = 24; }
 
-    let c = planColors[pID % 3][idx % 5] || '#cccccc';
+    let c = planColors[pID % planColors.length][idx % 5] || '#cccccc';
 
     // Keep ImageURL paths pointing to the relocated assets/ folder transparently.
     let img = row.ImageURL || null;

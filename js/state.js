@@ -30,7 +30,10 @@ const typeIcon = { 'Sectional': '🛋️', 'Couch': '🛋️', 'Futon': '🛋️
 const planColors = [
   ['#a9a9a9', '#d2b48c', '#deb887', '#ffdead', '#cd853f'],
   ['#6c7a89', '#8d6e63', '#8d6e63', '#5d4037', '#b0bec5'],
-  ['#d7ccc8', '#3e2723', '#e0e0e0', '#795548', '#424242']
+  ['#d7ccc8', '#3e2723', '#e0e0e0', '#795548', '#424242'],
+  ['#f5f0e6', '#c9b89a', '#e8dcc4', '#b8a082', '#8b7355'],
+  ['#e8eef2', '#b5c7d6', '#d4d9dc', '#9fa8b0', '#6a7580'],
+  ['#4a3c2e', '#8b6f47', '#2f2a24', '#5c4a36', '#c9a97a']
 ];
 
 function showToast(msg) {
