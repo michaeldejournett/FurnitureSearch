@@ -13,8 +13,8 @@ body {
 .tracker.over { background: #dc3545; }
 .tracker.count { background: rgba(40,167,69,0.6); }
 
-.controls { padding: 10px; border-bottom: 1px solid #ddd; display: flex; gap: 5px; justify-content: space-between;}
-.controls button { padding: 8px 5px; cursor: pointer; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-size: 0.8em; flex: 1;}
+.controls { padding: 10px; border-bottom: 1px solid #ddd; display: flex; flex-wrap: wrap; gap: 5px; }
+.controls button { padding: 8px 8px; cursor: pointer; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-size: 0.78em; flex: 1 1 auto; min-width: 60px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 140px; }
 .controls button.active { background: #007bff; color: white; border-color: #0056b3; }
 #btn-cust { background: #6f42c1; color: white; border-color: #59339d; }
 #btn-cust.active { background: #59339d; }
