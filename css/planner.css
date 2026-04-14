@@ -16,7 +16,8 @@ body {
 .controls { padding: 10px; border-bottom: 1px solid #ddd; display: flex; gap: 5px; justify-content: space-between;}
 .controls button { padding: 8px 5px; cursor: pointer; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-size: 0.8em; flex: 1;}
 .controls button.active { background: #007bff; color: white; border-color: #0056b3; }
-.controls button.btn-custom { background: #6f42c1; color: white; border-color: #59339d; }
+#btn-cust { background: #6f42c1; color: white; border-color: #59339d; }
+#btn-cust.active { background: #59339d; }
 
 #db-loader { padding: 15px; background: #fff3cd; border-bottom: 1px solid #ffeeba; color: #856404; font-size: 0.85em; text-align: center; }
 #db-loader input { margin-top: 10px; }

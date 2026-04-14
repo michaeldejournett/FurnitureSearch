@@ -15,6 +15,7 @@ let itemsOnCanvas = [];
 let uniqueCounter = 0;
 let currentFilterMode = 0;
 let layouts = {};
+let plans = [];
 
 let history = [];
 

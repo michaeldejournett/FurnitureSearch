@@ -1,9 +1,10 @@
 function updateNavActive() {
-  const btns = document.querySelectorAll('#nav-controls button');
-  btns.forEach((b, i) => {
-    if(i < 6) b.className = (currentFilterMode === i) ? 'active' : '';
-    else b.className = (currentFilterMode === -1) ? 'btn-custom active' : 'btn-custom';
+  plans.forEach(p => {
+    const b = document.getElementById('btn-' + p.id);
+    if(b) b.className = (currentFilterMode === p.id) ? 'active' : '';
   });
+  const cust = document.getElementById('btn-cust');
+  if(cust) cust.className = (currentFilterMode === -1) ? 'active' : '';
 }
 
 function stashCurrentLayout() {

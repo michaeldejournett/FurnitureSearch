@@ -13,16 +13,39 @@ function determineType(typeStr) {
   return typeStr.split(" ")[0] || 'Item';
 }
 
+function renderNavControls() {
+  const nav = document.getElementById('nav-controls');
+  nav.innerHTML = '';
+  plans.forEach(p => {
+    const b = document.createElement('button');
+    b.id = 'btn-' + p.id;
+    b.textContent = p.label;
+    b.onclick = () => loadPreset(p.id);
+    nav.appendChild(b);
+  });
+  const cust = document.createElement('button');
+  cust.id = 'btn-cust';
+  cust.textContent = 'Library (+)';
+  cust.onclick = openCustom;
+  nav.appendChild(cust);
+}
+
 function processCSV(results) {
   masterLibrary = [];
+  plans = [];
   const rows = results.data;
+  const planLabels = {};
 
   rows.forEach((row, idx) => {
     if(!row.Price || !row["Item Type"]) return;
+    const pID = parseInt(row.PlanID) || 0;
+    if(!(pID in planLabels)) {
+      const style = (row.Style || '').trim();
+      planLabels[pID] = style || ('Plan ' + (pID + 1));
+    }
 
     let w = parseFloat(row.Width) || 50;
     let d = parseFloat(row.Depth) || 50;
-    let pID = parseInt(row.PlanID) || 0;
     let price = parseFloat(row.Price.toString().replace(/[^0-9.]/g, '')) || 0;
     let tStr = row["Item Type"] || "";
     let cleanType = determineType(tStr);
@@ -56,12 +79,25 @@ function processCSV(results) {
     });
   });
 
+  plans = Object.keys(planLabels)
+    .map(k => parseInt(k, 10))
+    .sort((a, b) => a - b)
+    .map(id => ({ id, label: planLabels[id] }));
+
+  if(plans.length === 0) {
+    const loader = document.getElementById('db-loader');
+    loader.innerHTML = '<strong>⚠️ No valid rows found.</strong><br/>Make sure your CSV has PlanID, Item Type, and Price columns. <a href="#" onclick="downloadCSVTemplate(); return false;">Download a template</a>.';
+    return;
+  }
+
+  renderNavControls();
   document.getElementById('db-loader').style.display = 'none';
   document.getElementById('nav-controls').style.display = 'flex';
   document.getElementById('action-bar').style.display = 'grid';
 
-  if(!restoreState()) {
-    loadPreset(0);
+  const validIds = new Set(plans.map(p => p.id));
+  if(!restoreState() || !validIds.has(currentFilterMode) && currentFilterMode !== -1) {
+    loadPreset(plans[0].id);
   } else {
     applyCanvasDims();
     renderCanvasItems();

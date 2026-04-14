@@ -15,6 +15,21 @@ function exportCSV() {
   document.body.removeChild(link);
 }
 
+function downloadCSVTemplate() {
+  const rows = [
+    'PlanID,Style,Room,Item Type,Product Name,Retailer,Price,Link,Width,Depth,ImageURL',
+    '0,My Style,Living Room,Sectional Couch,Example Sofa,Example Retailer,599,https://example.com/product,85,40,https://example.com/image.jpg',
+    '0,My Style,Bedroom,Bed,Owned Bed,Existing,0,#,54,75,images/shared_bed.jpg'
+  ];
+  const csvContent = 'data:text/csv;charset=utf-8,' + rows.join('\r\n');
+  const link = document.createElement('a');
+  link.setAttribute('href', encodeURI(csvContent));
+  link.setAttribute('download', 'furniture_proposals_template.csv');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 function saveAsImage() {
   const c = document.createElement('canvas');
   const cont = document.getElementById('canvas-container');
