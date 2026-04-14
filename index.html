@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Furniture Planner Pro V5</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+<link rel="stylesheet" href="css/planner.css">
+</head>
+<body>
+
+<div id="sidebar">
+  <div class="header">
+    <h2>Apartment Decor Planner</h2>
+    <div style="font-size: 0.8em; opacity: 0.8; margin-top: 5px;">Build & Mix your space to scale.</div>
+    <div style="margin-top: 8px;">
+      <span id="budget-tracker" class="tracker">Total: $0 / $4,500</span>
+      <span id="count-tracker" class="tracker count">Added 0 / 0</span>
+    </div>
+  </div>
+
+  <div id="db-loader">
+    <strong>⚠️ Database Required</strong><br/>
+    Please select your <code>data/furniture_proposals.csv</code> file to load the items!
+    <br/><input type="file" id="csv-file" accept=".csv" />
+  </div>
+
+  <div class="controls" style="display: none;" id="nav-controls">
+    <button id="btn-0" class="active" onclick="loadPreset(0)">P1</button>
+    <button id="btn-1" onclick="loadPreset(1)">P2</button>
+    <button id="btn-2" onclick="loadPreset(2)">P3</button>
+    <button id="btn-cust" class="btn-custom" onclick="openCustom()">Library (+)</button>
+  </div>
+
+  <details id="bg-swap" class="bg-panel">
+    <summary>🖼 Background & Scale</summary>
+    <div class="bg-row">
+      <input type="file" id="bg-file" accept="image/*" style="font-size: 0.9em;" />
+      <button id="btn-calibrate" class="btn-calibrate" onclick="toggleCalibration()">📏 Calibrate: click two points on a wall</button>
+      <button onclick="clearBackground()" style="background:#6c757d;">🧹 Clear Background (restore default)</button>
+      <div id="bg-status" class="bg-status">Current: Layout.png (PPI 1.68)</div>
+    </div>
+  </details>
+
+  <div class="item-list" id="item-list"></div>
+
+  <div class="action-bar" style="display: none;" id="action-bar">
+    <button class="action-btn btn-rotate" onclick="rotateSelected()">↻ Rot (R)</button>
+    <button class="action-btn btn-delete" onclick="deleteSelected()">🗑️ Del</button>
+    <button class="action-btn btn-undo" onclick="undo()">↶ Undo</button>
+    <button class="action-btn btn-save" onclick="saveAsImage()">🖼 PNG</button>
+    <button class="action-btn btn-export" onclick="exportCSV()">📥 BOM</button>
+    <button class="action-btn btn-reset" onclick="resetLayout()">🧹 Clear Furniture</button>
+  </div>
+</div>
+
+<div id="main">
+  <div class="instruction-toast" id="toast">Drag to move • Click to select • 'R' to rotate • 'Backspace' to delete • Ctrl+Z to undo</div>
+  <div id="canvas-container"></div>
+</div>
+
+<script src="js/state.js"></script>
+<script src="js/library.js"></script>
+<script src="js/history.js"></script>
+<script src="js/canvas.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/presets.js"></script>
+<script src="js/background.js"></script>
+<script src="js/export.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

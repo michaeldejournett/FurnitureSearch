@@ -1,0 +1,84 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0; padding: 0; background: #f0f2f5; display: flex; height: 100vh; overflow: hidden;
+}
+#sidebar {
+  width: 380px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  display: flex; flex-direction: column; z-index: 10;
+}
+.header { padding: 20px; background: #1a1a1a; color: white; }
+.header h2 { margin: 0; font-size: 1.2rem; }
+
+.tracker { margin-top: 10px; font-weight: bold; background: rgba(0,0,0,0.3); padding: 8px 10px; border-radius: 4px; display: inline-block; font-size: 14px; margin-right: 6px; }
+.tracker.over { background: #dc3545; }
+.tracker.count { background: rgba(40,167,69,0.6); }
+
+.controls { padding: 10px; border-bottom: 1px solid #ddd; display: flex; gap: 5px; justify-content: space-between;}
+.controls button { padding: 8px 5px; cursor: pointer; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-size: 0.8em; flex: 1;}
+.controls button.active { background: #007bff; color: white; border-color: #0056b3; }
+.controls button.btn-custom { background: #6f42c1; color: white; border-color: #59339d; }
+
+#db-loader { padding: 15px; background: #fff3cd; border-bottom: 1px solid #ffeeba; color: #856404; font-size: 0.85em; text-align: center; }
+#db-loader input { margin-top: 10px; }
+
+.bg-panel { padding: 10px 12px; border-bottom: 1px solid #ddd; font-size: 0.85em; }
+.bg-panel summary { cursor: pointer; font-weight: bold; }
+.bg-panel .bg-row { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.bg-panel button { padding: 6px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; color: white; }
+.btn-calibrate { background: #007bff; }
+.btn-calibrate.active { background: #dc3545; }
+.bg-status { font-size: 0.78em; color: #555; }
+
+.item-list { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+.item-card { border: 2px solid transparent; border-radius: 8px; overflow: hidden; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.15); display: flex; position: relative; flex-shrink: 0; }
+.item-card:hover { border-color: #bbd8fc; }
+.item-card.selected { border-color: #007bff; box-shadow: 0 0 0 2px rgba(0,123,255,0.25); background: #f8fbff; }
+.item-card.added { background: #f1faf2; border-left: 4px solid #28a745; }
+.item-card .count-badge { position: absolute; top: 4px; right: 4px; background: #28a745; color: white; font-size: 0.7em; padding: 1px 6px; border-radius: 10px; font-weight: bold; }
+
+.item-image { width: 110px; display: flex; align-items: center; justify-content: center; font-size: 30px; background-size: contain; background-repeat: no-repeat; background-position: center; flex-shrink: 0; }
+.item-info { padding: 10px; flex: 1; display:flex; flex-direction:column; justify-content:center; }
+.item-title { margin: 0 0 3px 0; font-size: 0.9em; font-weight: 600; line-height: 1.2; }
+.item-meta { font-size: 0.75em; color: #666; margin: 0 0 3px 0; text-transform: uppercase; font-weight: bold; }
+.item-dims { font-size: 0.8em; color: #555; background: #eee; display: inline-block; padding: 2px 5px; border-radius: 3px; margin-bottom: 3px; }
+.item-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; gap: 4px; }
+.item-price { font-weight: bold; color: #28a745; font-size: 0.9em; }
+
+.external-link { font-size: 0.85em; text-decoration: none; color: #007bff; margin-left: 5px; }
+.external-link:hover { text-decoration: underline; }
+
+.toggle-btn { color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8em; font-weight: bold; }
+.toggle-btn.add { background: #007bff; }
+.toggle-btn.add:hover { background: #0056b3; }
+.toggle-btn.remove { background: #28a745; }
+.toggle-btn.remove:hover { background: #dc3545; }
+.copy-btn { background: #6c757d; color: white; border: none; padding: 4px 7px; border-radius: 4px; cursor: pointer; font-size: 0.8em; font-weight: bold; }
+.copy-btn:hover { background: #495057; }
+
+.action-bar { padding: 12px; background: #fafafa; border-top: 1px solid #ddd; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.action-btn { padding: 8px 6px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; color: white; font-size: 0.78em; }
+.btn-rotate { background: #6c757d; } .btn-rotate:hover { background: #5a6268; }
+.btn-delete { background: #dc3545; } .btn-delete:hover { background: #c82333; }
+.btn-save { background: #28a745; } .btn-save:hover { background: #218838; }
+.btn-export { background: #e0a800; } .btn-export:hover { background: #c69500; }
+.btn-undo { background: #17a2b8; } .btn-undo:hover { background: #117a8b; }
+.btn-reset { background: #343a40; } .btn-reset:hover { background: #23272b; }
+
+#main { flex: 1; position: relative; overflow: auto; background-color: #e5e5f7; background-image: radial-gradient(#ccc 1px, transparent 1px); background-size: 20px 20px; display: flex; align-items: center; justify-content: center; }
+
+#canvas-container { position: relative; width: 843px; height: 705px; background: url("../assets/Layout.png") no-repeat center center; background-size: 100% 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+#canvas-container.calibrating { cursor: crosshair; }
+#calibration-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+#calibration-svg line { stroke: #ff3b30; stroke-width: 3; stroke-dasharray: 6 4; }
+#calibration-svg circle { fill: #ff3b30; }
+
+.furniture { position: absolute; cursor: grab; user-select: none; opacity: 0.95; padding: 0; margin: 0; box-sizing: border-box; }
+.furniture:active { cursor: grabbing; }
+
+.solid-block { position: absolute; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid rgba(0,0,0,0.6); box-sizing: border-box; transition: outline 0.1s; }
+.furniture.selected .solid-block { outline: 3px dashed #007bff; outline-offset: 1px; }
+
+.label { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; font-size: 13px; font-weight: bold; color: black; white-space: nowrap; z-index: 5; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;}
+.l-label { top: 20%; left: 20%; transform: translate(-50%, -50%); }
+
+.instruction-toast { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.8); color: white; padding: 10px 15px; border-radius: 5px; font-size: 0.9em; pointer-events: none; z-index: 999; max-width: 320px; }
