@@ -1,0 +1,28 @@
+PlanID,Style,Room,Item Type,Product Name,Retailer,Price,Link,Width,Depth,ImageURL
+0,Budget/Minimalist,Bedroom,Desk,FEZIBO 63-inch L-Shaped Standing Desk,Amazon,280,https://www.amazon.com/dp/B0BWR3KMYQ,63,60,images/b_desk.jpg
+0,Budget/Minimalist,Living Room,Sectional Couch,Ashley Marleton 2-Pc Sectional (Gray),Nebraska Furniture Mart,600,https://www.nfm.com/ashley-marleton-2-piece-right-facing-sectional-with-chaise-in-gray-64749740/64749740.html,85,60,images/b_futon.jpg
+0,Budget/Minimalist,Living Room,TV Stand,Ashley Trinell 60-inch TV Stand,Nebraska Furniture Mart,97,https://www.nfm.com/ashley-trinell-60-tv-stand-in-brown-66129446/66129446.html,60,16,images/b_tv.jpg
+0,Budget/Minimalist,Living Room,Coffee Table,Ashley Cabalynn Coffee Table,Nebraska Furniture Mart,259,https://www.nfm.com/ashley-cabalynn-coffee-table-in-light-brown-65305922/65305922.html,40,24,images/b_din.jpg
+0,Budget/Minimalist,Dining Room,Dining Table,Ashley Bridson 6-Piece Dining Set (Gray),Nebraska Furniture Mart,500,https://www.nfm.com/ashley-bridson-6-piece-rectangular-dining-set-in-gray-55926299/55926299.html,60,36,images/dining.jpg
+0,Budget/Minimalist,Bedroom,Bed,Owned Full Size Bed,Existing,0,#,54,75,images/shared_bed.jpg
+0,Budget/Minimalist,Bedroom,Wardrobe,Owned Bedroom Wardrobe,Existing,0,#,36,24,images/shared_wardrobe.jpg
+0,Budget/Minimalist,Dining Room,Stool,Ashley Centiar 24-inch Counter Stool (Brown/Black),Nebraska Furniture Mart,90,https://www.nfm.com/ashley-centiar-24-upholstered-counter-stool-in-brown-and-black-48825723/48825723.html,18,20,images/b_stool.jpg
+0,Budget/Minimalist,Living Room,Rug,Safavieh Adirondack 8x10 (Ivory/Teal),Nebraska Furniture Mart,175,https://www.nfm.com/safavieh-adirondack-adr109d-8-x-10-ivory-and-teal-area-rug-3744135/3744135.html,96,120,images/b_rug.jpg
+1,Mid-Range/Modern,Bedroom,Desk,Sauder Willow Place L-Shaped Desk,Nebraska Furniture Mart,395,https://www.nfm.com/sauder-willow-place-l-shaped-desk-66982034/66982034.html,65,65,images/m_desk.jpg
+1,Mid-Range/Modern,Living Room,Sectional Couch,Northwestern Bailey 2-Pc Sectional (Cream),Nebraska Furniture Mart,1215,https://www.nfm.com/northwestern-bailey-2-piece-left-facing-l-shaped-sectional-in-cream/59339580.html,110,65,images/m_futon.jpg
+1,Mid-Range/Modern,Living Room,TV Stand,Ashley Zadilyn 72-inch XL TV Stand,Nebraska Furniture Mart,330,https://www.nfm.com/ashley-zadilyn-72-xl-tv-stand-in-warm-natural-brown-69328128/69328128.html,72,18,images/m_tv.jpg
+1,Mid-Range/Modern,Living Room,Coffee Table,Millennium Burkhaus Coffee Table,Nebraska Furniture Mart,300,https://www.nfm.com/millennium-burkhaus-coffee-table-in-white-and-dark-brown-64081250/64081250.html,48,24,images/m_din.jpg
+1,Mid-Range/Modern,Dining Room,Dining Table,Steve Silver Garland 7-Piece Dining Set (Toffee),Nebraska Furniture Mart,700,https://www.nfm.com/crystal-city-garland-7-piece-rectangular-dining-set-in-toffee-61597944/61597944.html,72,40,images/p1_dining.jpg
+1,Mid-Range/Modern,Bedroom,Bed,Owned Full Size Bed,Existing,0,#,54,75,images/shared_bed.jpg
+1,Mid-Range/Modern,Bedroom,Wardrobe,Owned Bedroom Wardrobe,Existing,0,#,36,24,images/shared_wardrobe.jpg
+1,Mid-Range/Modern,Dining Room,Stool,Steve Silver Gene Swivel Counter Stool (Charcoal),Nebraska Furniture Mart,150,https://www.nfm.com/crystal-city-gene-swivel-counter-stool-in-charcoal-65851180/65851180.html,18,20,images/m_stool.jpg
+1,Mid-Range/Modern,Living Room,Rug,Safavieh Isabella 8x10 (Dark Grey/Cream),Nebraska Furniture Mart,189,https://www.nfm.com/safavieh-isabella-8-x-10-dark-grey-and-cream-area-rug-5347234/5347234.html,96,120,images/m_rug.jpg
+2,Premium/Cozy,Bedroom,Desk,UPLIFT V2 L-Shaped Standing Desk,UPLIFT Desk,1099,https://www.upliftdesk.com/uplift-v2-l-shaped-standing-desk/,72,72,images/p_desk.jpg
+2,Premium/Cozy,Living Room,Sectional Couch,Northwestern Willet 2-Pc Sectional (Stone),Nebraska Furniture Mart,1500,https://www.nfm.com/northwestern-2-piece-sectional-65954745/65954745.html,120,70,images/p_futon.jpg
+2,Premium/Cozy,Living Room,TV Stand,Ashley Wildenauer 76-inch Extra Large,Nebraska Furniture Mart,550,https://www.nfm.com/ashley-wildenauer-76-tv-stand-in-brown-and-black-68966522/68966522.html,76,20,images/p_tv.jpg
+2,Premium/Cozy,Living Room,Coffee Table,Ashley Johurst Lift Top Cocktail Table,Nebraska Furniture Mart,380,https://www.nfm.com/ashley-johurst-lift-top-cocktail-table-in-grayish-brown-and-black/57451556.html,50,28,images/p_din.jpg
+2,Premium/Cozy,Dining Room,Dining Table,Ashley Realyn 6-Piece Set,Nebraska Furniture Mart,1100,https://www.nfm.com/ashley-realyn-6-piece-dining-set/56023458.html,80,42,images/p2_dining.jpg
+2,Premium/Cozy,Bedroom,Bed,Owned Full Size Bed,Existing,0,#,54,75,images/shared_bed.jpg
+2,Premium/Cozy,Bedroom,Wardrobe,Owned Bedroom Wardrobe,Existing,0,#,36,24,images/shared_wardrobe.jpg
+2,Premium/Cozy,Dining Room,Stool,Ashley Valebeck 24.5-inch Counter Stool (Brown/Black),Nebraska Furniture Mart,210,https://www.nfm.com/ashley-valebeck-24-5-counter-stool-with-back-in-brown-and-black-65001521/65001521.html,19,22,images/p_stool.jpg
+2,Premium/Cozy,Living Room,Rug,Traditional Premium 9x12 Wool Rug,Nebraska Furniture Mart,449,https://www.nfm.com/safavieh-isabella-isa919b-9-x-12-cream-and-beige-area-rug-5347473/5347473.html,108,144,images/p_rug.jpg
