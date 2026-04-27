@@ -1,3 +1,14 @@
+async function autoLoadCSV() {
+  try {
+    const res = await fetch('data/furniture_proposals.csv');
+    if (!res.ok) return;
+    const text = await res.text();
+    Papa.parse(text, { header: true, skipEmptyLines: true, complete: processCSV });
+  } catch(e) {
+    // Running from file:// or file missing — leave manual picker visible
+  }
+}
+
 document.getElementById('csv-file').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if(!file) return;
@@ -15,3 +26,4 @@ window.addEventListener('keydown', (e) => {
 
 installDragHandlers();
 installBackgroundHandlers();
+autoLoadCSV();

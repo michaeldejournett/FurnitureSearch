@@ -27,7 +27,7 @@ let dragStartSnapshot = null;
 let calibrating = false;
 let calibPoints = [];
 
-const typeIcon = { 'Sectional': '🛋️', 'Couch': '🛋️', 'Futon': '🛋️', 'TV Stand': '📺', 'Table': '☕', 'Dining': '🍽️', 'Desk': '💻', 'Bed': '🛏️', 'Wardrobe': '🚪', 'Rug': '🔲' };
+const typeIcon = { 'Sectional': '🛋️', 'Couch': '🛋️', 'Futon': '🛋️', 'TV Stand': '📺', 'Table': '☕', 'Dining': '🍽️', 'Desk': '💻', 'Bed': '🛏️', 'Bed Frame': '🛏️', 'Mattress': '🛏️', 'Bed Foundation': '🪵', 'Wardrobe': '🚪', 'Rug': '🔲' };
 const planColors = [
   ['#a9a9a9', '#d2b48c', '#deb887', '#ffdead', '#cd853f'],
   ['#6c7a89', '#8d6e63', '#8d6e63', '#5d4037', '#b0bec5'],

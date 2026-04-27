@@ -12,20 +12,17 @@
 <div id="sidebar">
   <div class="header">
     <h2>Apartment Decor Planner</h2>
-    <div style="font-size: 0.8em; opacity: 0.8; margin-top: 5px;">Build & Mix your space to scale.</div>
-    <div style="margin-top: 8px;">
+    <div class="header-sub">Build &amp; mix your space to scale.</div>
+    <div class="trackers">
       <span id="budget-tracker" class="tracker">Total: $0 / $4,500</span>
       <span id="count-tracker" class="tracker count">Added 0 / 0</span>
     </div>
   </div>
 
   <div id="db-loader">
-    <strong>⚠️ Database Required</strong><br/>
-    Please select a furniture CSV file to load the items!
-    <br/><input type="file" id="csv-file" accept=".csv" />
-    <div style="font-size: 0.85em; margin-top: 6px;">
-      Need the format? <a href="#" onclick="downloadCSVTemplate(); return false;">📄 Download CSV Template</a>
-    </div>
+    <strong>Load a furniture CSV to begin</strong>
+    <input type="file" id="csv-file" accept=".csv" />
+    <div style="margin-top:5px;">Need the format? <a href="#" onclick="downloadCSVTemplate(); return false;">Download template</a></div>
   </div>
 
   <div class="controls" style="display: none;" id="nav-controls"></div>
