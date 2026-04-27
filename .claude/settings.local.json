@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.nfm.com)",
+      "Bash(python3 *)",
+      "WebSearch"
+    ]
+  }
+}

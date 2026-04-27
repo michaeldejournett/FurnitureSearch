@@ -7,6 +7,9 @@ function determineType(typeStr) {
   if(s.includes('tv') || s.includes('console')) return 'TV Stand';
   if(s.includes('dining')) return 'Dining';
   if(s.includes('table')) return 'Table';
+  if(s.includes('mattress')) return 'Mattress';
+  if(s.includes('foundation') || s.includes('platform')) return 'Bed Foundation';
+  if(s.includes('frame') || s.includes('panel bed') || s.includes('bed frame')) return 'Bed Frame';
   if(s.includes('bed')) return 'Bed';
   if(s.includes('wardrobe')) return 'Wardrobe';
   if(s.includes('rug')) return 'Rug';
