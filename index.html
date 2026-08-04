@@ -3,15 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Furniture Planner Pro V5</title>
+<meta name="description" content="Compare furniture options and arrange them to scale in an interactive apartment floor planner.">
+<meta name="theme-color" content="#0f172a">
+<title>Apartment Furniture Planner</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 <link rel="stylesheet" href="css/planner.css">
 </head>
 <body>
 
-<div id="sidebar">
+<aside id="sidebar" aria-label="Furniture controls">
   <div class="header">
-    <h2>Apartment Decor Planner</h2>
+    <h1>Apartment Decor Planner</h1>
     <div class="header-sub">Build &amp; mix your space to scale.</div>
     <div class="trackers">
       <span id="budget-tracker" class="tracker">Total: $0 / $4,500</span>
@@ -20,7 +23,7 @@
   </div>
 
   <div id="db-loader">
-    <strong>Load a furniture CSV to begin</strong>
+    <label for="csv-file"><strong>Load a furniture CSV to begin</strong></label>
     <input type="file" id="csv-file" accept=".csv" />
     <div style="margin-top:5px;">Need the format? <a href="#" onclick="downloadCSVTemplate(); return false;">Download template</a></div>
   </div>
@@ -30,6 +33,7 @@
   <details id="bg-swap" class="bg-panel">
     <summary>🖼 Background & Scale</summary>
     <div class="bg-row">
+      <label for="bg-file">Upload a floor plan image</label>
       <input type="file" id="bg-file" accept="image/*" style="font-size: 0.9em;" />
       <button id="btn-calibrate" class="btn-calibrate" onclick="toggleCalibration()">📏 Calibrate: click two points on a wall</button>
       <button onclick="clearBackground()" style="background:#6c757d;">🧹 Clear Background (restore default)</button>
@@ -47,12 +51,12 @@
     <button class="action-btn btn-export" onclick="exportCSV()">📥 BOM</button>
     <button class="action-btn btn-reset" onclick="resetLayout()">🧹 Clear Furniture</button>
   </div>
-</div>
+</aside>
 
-<div id="main">
-  <div class="instruction-toast" id="toast">Drag to move • Click to select • 'R' to rotate • 'Backspace' to delete • Ctrl+Z to undo</div>
+<main id="main" aria-label="Floor plan workspace">
+  <div class="instruction-toast" id="toast" role="status" aria-live="polite">Drag to move • Click to select • 'R' to rotate • 'Backspace' to delete • Ctrl+Z to undo</div>
   <div id="canvas-container"></div>
-</div>
+</main>
 
 <script src="js/state.js"></script>
 <script src="js/library.js"></script>

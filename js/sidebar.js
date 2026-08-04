@@ -33,8 +33,8 @@ function renderSidebar(filterMode) {
     const infoDiv = document.createElement('div');
     infoDiv.className = 'item-info';
 
-    const metaStr = `<div class="item-meta">${item.type} <a class="external-link" href="${item.url}" target="_blank" title="${item.retailer}" onclick="event.stopPropagation()">[↗ Link]</a></div>`;
-    const titleStr = `<h3 class="item-title">${item.text}</h3>`;
+    const metaStr = `<div class="item-meta">${item.type} <a class="external-link" href="${item.url}" target="_blank" rel="noopener noreferrer" title="${item.retailer}" onclick="event.stopPropagation()">[↗ Link]</a></div>`;
+    const titleStr = `<h2 class="item-title">${item.text}</h2>`;
     const dimStr = `<div class="item-dims">${item.dims}</div>`;
 
     const bottomDiv = document.createElement('div');
