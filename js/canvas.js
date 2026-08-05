@@ -16,6 +16,7 @@ function selectItem(uuid) {
     const card = document.getElementById('card-' + baseId);
     if(card) { card.classList.add('selected'); card.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
   }
+  if(typeof updateDetailPanel === 'function') updateDetailPanel();
 }
 
 function spawnItem(baseId, x, y, rotation, skipHistory) {
@@ -98,7 +99,7 @@ function renderCanvasItems() {
 
   itemsOnCanvas.forEach((item) => {
     const el = document.createElement('div');
-    el.className = 'furniture';
+    el.className = 'furniture type-' + item.type.toLowerCase().replace(/\s+/g, '-');
     el.id = item.uuid;
     el.dataset.baseid = item.id;
 
@@ -162,6 +163,7 @@ function renderCanvasItems() {
   });
   if(!oldSelFound) selectedElement = null;
   updateBudget();
+  if(typeof updateDetailPanel === 'function') updateDetailPanel();
 }
 
 function installDragHandlers() {

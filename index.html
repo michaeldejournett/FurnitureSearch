@@ -3,60 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Compare furniture options and arrange them to scale in an interactive apartment floor planner.">
+<meta name="description" content="Search, compare, and arrange furniture to scale in an interactive apartment floor planner.">
 <meta name="theme-color" content="#0f172a">
-<title>Apartment Furniture Planner</title>
+<title>Furniture Search — Apartment Planner</title>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
 <link rel="stylesheet" href="css/planner.css">
 </head>
 <body>
 
-<aside id="sidebar" aria-label="Furniture controls">
-  <div class="header">
-    <h1>Apartment Decor Planner</h1>
-    <div class="header-sub">Build &amp; mix your space to scale.</div>
-    <div class="trackers">
-      <span id="budget-tracker" class="tracker">Total: $0 / $4,500</span>
-      <span id="count-tracker" class="tracker count">Added 0 / 0</span>
+<header id="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 18v-6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6"/>
+      <path d="M2 14h20"/>
+      <path d="M5 18v2M19 18v2"/>
+    </svg>
+    <div class="brand-text">
+      <h1>Furniture Search</h1>
+      <span>apartment planner</span>
     </div>
   </div>
+
+  <nav id="nav-controls" aria-label="Design plans" style="display:none;"></nav>
+
+  <div id="action-bar" class="topbar-actions" style="display:none;">
+    <button class="tb-btn" onclick="undo()" title="Undo last change (Ctrl+Z)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-15-6.7L3 13"/></svg>
+      <span>Undo</span>
+    </button>
+    <button class="tb-btn" onclick="saveAsImage()" title="Download the floor plan as a PNG image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+      <span>PNG</span>
+    </button>
+    <button class="tb-btn" onclick="exportCSV()" title="Download a bill of materials (CSV)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+      <span>Export</span>
+    </button>
+    <button class="tb-btn danger" onclick="resetLayout()" title="Remove all furniture from the floor plan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      <span>Clear</span>
+    </button>
+    <button class="tb-btn" onclick="openHelp()" title="Keyboard shortcuts and help (?)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+      <span>Help</span>
+    </button>
+  </div>
+
+  <button id="catalog-toggle" class="tb-btn" onclick="toggleCatalog()" aria-expanded="false" aria-controls="sidebar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>Catalog</span>
+  </button>
+</header>
+
+<div id="layout">
+<aside id="sidebar" aria-label="Furniture catalog">
+
+  <section class="budget-card" aria-label="Budget">
+    <div class="budget-row">
+      <span class="budget-label">Budget</span>
+      <button id="budget-edit" title="Click to change the budget">$4,500 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+    </div>
+    <div class="budget-bar" role="progressbar" aria-label="Budget used"><div id="budget-fill"></div></div>
+    <div class="budget-meta">
+      <span id="budget-tracker" class="tracker">$0 of $4,500</span>
+      <span id="count-tracker" class="tracker count">0 items placed</span>
+    </div>
+  </section>
+
+  <section class="catalog-controls" aria-label="Search and filter">
+    <div class="search-row">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" id="search-input" placeholder="Search furniture, types, retailers…" aria-label="Search furniture">
+    </div>
+    <div id="room-chips" class="chip-row" role="group" aria-label="Filter by room"></div>
+    <div class="sort-row">
+      <label for="sort-select">Sort</label>
+      <select id="sort-select">
+        <option value="default">Plan order</option>
+        <option value="price-asc">Price: low to high</option>
+        <option value="price-desc">Price: high to low</option>
+        <option value="name">Name A–Z</option>
+        <option value="size">Largest footprint</option>
+      </select>
+      <span id="result-count" aria-live="polite"></span>
+    </div>
+  </section>
 
   <div id="db-loader">
     <label for="csv-file"><strong>Load a furniture CSV to begin</strong></label>
     <input type="file" id="csv-file" accept=".csv" />
-    <div style="margin-top:5px;">Need the format? <a href="#" onclick="downloadCSVTemplate(); return false;">Download template</a></div>
+    <div class="loader-hint">Need the format? <a href="#" onclick="downloadCSVTemplate(); return false;">Download template</a></div>
   </div>
-
-  <div class="controls" style="display: none;" id="nav-controls"></div>
-
-  <details id="bg-swap" class="bg-panel">
-    <summary>🖼 Background & Scale</summary>
-    <div class="bg-row">
-      <label for="bg-file">Upload a floor plan image</label>
-      <input type="file" id="bg-file" accept="image/*" style="font-size: 0.9em;" />
-      <button id="btn-calibrate" class="btn-calibrate" onclick="toggleCalibration()">📏 Calibrate: click two points on a wall</button>
-      <button onclick="clearBackground()" style="background:#6c757d;">🧹 Clear Background (restore default)</button>
-      <div id="bg-status" class="bg-status">Current: Layout.png (PPI 1.68)</div>
-    </div>
-  </details>
 
   <div class="item-list" id="item-list"></div>
 
-  <div class="action-bar" style="display: none;" id="action-bar">
-    <button class="action-btn btn-rotate" onclick="rotateSelected()">↻ Rot (R)</button>
-    <button class="action-btn btn-delete" onclick="deleteSelected()">🗑️ Del</button>
-    <button class="action-btn btn-undo" onclick="undo()">↶ Undo</button>
-    <button class="action-btn btn-save" onclick="saveAsImage()">🖼 PNG</button>
-    <button class="action-btn btn-export" onclick="exportCSV()">📥 BOM</button>
-    <button class="action-btn btn-reset" onclick="resetLayout()">🧹 Clear Furniture</button>
-  </div>
+  <details id="bg-swap" class="bg-panel">
+    <summary>Floor plan &amp; scale</summary>
+    <div class="bg-row">
+      <label for="bg-file">Upload a floor plan image</label>
+      <input type="file" id="bg-file" accept="image/*" />
+      <button id="btn-calibrate" class="btn-calibrate" onclick="toggleCalibration()">Calibrate: click two points on a wall</button>
+      <button class="btn-muted" onclick="clearBackground()">Restore default floor plan</button>
+      <div id="bg-status" class="bg-status"></div>
+    </div>
+  </details>
+
+  <details class="bg-panel">
+    <summary>Custom data</summary>
+    <div class="bg-row">
+      <label for="csv-reload">Replace the catalog with your own CSV</label>
+      <input type="file" id="csv-reload" accept=".csv" />
+      <div class="loader-hint"><a href="#" onclick="downloadCSVTemplate(); return false;">Download the CSV template</a></div>
+    </div>
+  </details>
 </aside>
 
 <main id="main" aria-label="Floor plan workspace">
-  <div class="instruction-toast" id="toast" role="status" aria-live="polite">Drag to move • Click to select • 'R' to rotate • 'Backspace' to delete • Ctrl+Z to undo</div>
-  <div id="canvas-container"></div>
+  <div id="canvas-scroll">
+    <div id="canvas-container"></div>
+  </div>
+
+  <div class="instruction-toast" id="toast" role="status" aria-live="polite">Drag to move &bull; Click to select &bull; R rotates &bull; Backspace deletes &bull; Ctrl+Z undoes</div>
+
+  <div id="detail-panel" hidden>
+    <div class="detail-info">
+      <span id="detail-type" class="detail-type"></span>
+      <h2 id="detail-name"></h2>
+      <div id="detail-meta" class="detail-meta"></div>
+    </div>
+    <div class="detail-actions">
+      <button onclick="rotateSelected()" title="Rotate 90° (R)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 15-6.7L21 13"/></svg>
+        Rotate
+      </button>
+      <button onclick="duplicateSelected()" title="Place another copy (D)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Duplicate
+      </button>
+      <a id="detail-link" href="#" target="_blank" rel="noopener noreferrer" title="Open the product page in a new tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+        View
+      </a>
+      <button class="danger" onclick="deleteSelected()" title="Remove from floor (Backspace)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+        Remove
+      </button>
+    </div>
+  </div>
+
+  <div id="action-toast" hidden></div>
 </main>
+</div>
+
+<div id="help-modal" class="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="modal-head">
+      <h2 id="help-title">How the planner works</h2>
+      <button class="modal-close" onclick="closeHelp()" aria-label="Close help">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Browse the catalog on the left, add pieces to the floor plan, and arrange them to scale. Everything saves automatically in your browser.</p>
+      <table class="shortcut-table">
+        <tbody>
+          <tr><td><kbd>Drag</kbd></td><td>Move a piece around the floor plan</td></tr>
+          <tr><td><kbd>Click</kbd></td><td>Select a piece and show its details</td></tr>
+          <tr><td><kbd>R</kbd></td><td>Rotate the selected piece 90&deg;</td></tr>
+          <tr><td><kbd>D</kbd></td><td>Duplicate the selected piece</td></tr>
+          <tr><td><kbd>Backspace</kbd></td><td>Remove the selected piece</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Deselect / close dialogs</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Undo the last change</td></tr>
+          <tr><td><kbd>?</kbd></td><td>Open this help</td></tr>
+        </tbody>
+      </table>
+      <p class="modal-footnote">Tabs across the top switch between design plans, each with its own saved layout and budget usage. Upload your own floor plan or furniture CSV from the panels at the bottom of the catalog.</p>
+    </div>
+  </div>
+</div>
 
 <script src="js/state.js"></script>
 <script src="js/library.js"></script>
@@ -66,6 +189,7 @@
 <script src="js/presets.js"></script>
 <script src="js/background.js"></script>
 <script src="js/export.js"></script>
+<script src="js/ui.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

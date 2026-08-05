@@ -17,6 +17,12 @@ let currentFilterMode = 0;
 let layouts = {};
 let plans = [];
 
+const DEFAULT_BUDGET = 4500;
+let budget = DEFAULT_BUDGET;
+let searchQuery = '';
+let roomFilter = 'All';
+let sortMode = 'default';
+
 let history = [];
 
 let dragElement = null;
@@ -46,7 +52,7 @@ function saveState() {
   try {
     const snapshot = JSON.parse(JSON.stringify(layouts));
     snapshot[String(currentFilterMode)] = JSON.parse(JSON.stringify(itemsOnCanvas));
-    const payload = { itemsOnCanvas, layouts: snapshot, PPI, currentBgUrl, canvasW, canvasH, currentFilterMode, uniqueCounter };
+    const payload = { itemsOnCanvas, layouts: snapshot, PPI, currentBgUrl, canvasW, canvasH, currentFilterMode, uniqueCounter, budget };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   } catch(e) {}
 }
@@ -71,6 +77,7 @@ function restoreState() {
     canvasH = s.canvasH || DEFAULT_CANVAS_H;
     currentFilterMode = (typeof s.currentFilterMode === 'number') ? s.currentFilterMode : 0;
     uniqueCounter = s.uniqueCounter || itemsOnCanvas.length;
+    budget = (typeof s.budget === 'number' && s.budget > 0) ? s.budget : DEFAULT_BUDGET;
     return true;
   } catch(e) { return false; }
 }

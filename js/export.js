@@ -7,6 +7,8 @@ function exportCSV() {
   masterLibrary.filter(i => !added.has(i.id)).forEach(item => {
     csvContent += `"NOT_ADDED","${item.type}","${item.text}","${item.dims}",$${item.numPrice},"${item.url}"\r\n`;
   });
+  const total = itemsOnCanvas.reduce((a, o) => a + o.numPrice, 0);
+  csvContent += `"","","","",,\r\n"TOTAL","","${itemsOnCanvas.length} items placed","",$${total},""\r\n"BUDGET","","","",$${budget},""\r\n`;
   const link = document.createElement("a");
   link.setAttribute("href", encodeURI(csvContent));
   link.setAttribute("download", "apartment_layout_bom.csv");

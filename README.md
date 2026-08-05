@@ -1,18 +1,19 @@
-# Apartment Furniture Planner
+# Furniture Search — Apartment Planner
 
-An interactive, browser-based apartment planner for comparing furniture options, tracking a budget, and arranging items to scale on a floor plan.
+A browser-based furniture planner: search and compare furniture options, track a budget, and arrange pieces to scale on an apartment floor plan.
 
-**Live demo:** <https://michaeldejournett.github.io/FurnitureSearch/>
+**Live app:** <https://michaeldejournett.github.io/FurnitureSearch/>
 
 ## Features
 
-- Automatically loads the included furniture proposal data
-- Filters products by design plan or displays the full library
-- Supports adding, moving, rotating, copying, and removing furniture
-- Tracks the selected furniture against a $4,500 budget
-- Saves layouts in browser storage
-- Imports custom floor plans and calibrates their scale
-- Exports a bill of materials or a PNG of the layout
+- Full-text search across products, types, retailers, and rooms, with room filter chips and sorting (price, name, footprint)
+- Design-plan tabs, each with its own saved layout, plus a custom-build mode over the full library
+- Adding, moving, rotating, duplicating, and removing furniture with keyboard shortcuts and an on-canvas details panel
+- Editable budget with a live progress bar and over-budget warnings
+- Type-aware floor plan rendering (sofas, beds, tables, and rugs each read differently at a glance)
+- Saves layouts and budget in browser storage
+- Imports custom floor plans (with wall calibration) and custom furniture CSVs
+- Exports a bill of materials (with totals) or a PNG of the layout
 
 ## Run locally
 

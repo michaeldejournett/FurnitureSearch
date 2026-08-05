@@ -16,14 +16,25 @@ document.getElementById('csv-file').addEventListener('change', function(e) {
 });
 
 window.addEventListener('keydown', (e) => {
+  const tag = (e.target.tagName || '').toLowerCase();
+  const typing = tag === 'input' || tag === 'textarea' || tag === 'select';
+
   if((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); undo(); return; }
-  if(e.key === 'Escape' && calibrating) { toggleCalibration(); return; }
+  if(e.key === 'Escape') {
+    if(helpIsOpen()) { closeHelp(); return; }
+    if(calibrating) { toggleCalibration(); return; }
+    if(!typing && selectedElement) { selectItem(null); return; }
+  }
+  if(typing) return;
+  if(e.key === '?') { openHelp(); return; }
   if(selectedElement) {
     if(e.key === 'r' || e.key === 'R') rotateSelected();
+    if(e.key === 'd' || e.key === 'D') duplicateSelected();
     if(e.key === 'Backspace' || e.key === 'Delete') deleteSelected();
   }
 });
 
 installDragHandlers();
 installBackgroundHandlers();
+installUIHandlers();
 autoLoadCSV();

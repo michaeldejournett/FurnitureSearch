@@ -28,7 +28,7 @@ function renderNavControls() {
   });
   const cust = document.createElement('button');
   cust.id = 'btn-cust';
-  cust.textContent = 'Library (+)';
+  cust.textContent = 'Custom build';
   cust.onclick = openCustom;
   nav.appendChild(cust);
 }
@@ -67,6 +67,7 @@ function processCSV(results) {
       id: 'db_' + idx,
       plan: pID,
       type: cleanType,
+      room: (row.Room || '').trim() || 'Other',
       text: row["Product Name"] || "Unknown Item",
       retailer: row.Retailer,
       numPrice: price,
@@ -94,12 +95,14 @@ function processCSV(results) {
   }
 
   renderNavControls();
+  renderRoomChips();
   document.getElementById('db-loader').style.display = 'none';
   document.getElementById('nav-controls').style.display = 'flex';
-  document.getElementById('action-bar').style.display = 'grid';
+  document.getElementById('action-bar').style.display = 'flex';
 
   const validIds = new Set(plans.map(p => p.id));
   if(!restoreState() || !validIds.has(currentFilterMode) && currentFilterMode !== -1) {
+    applyCanvasDims();
     loadPreset(plans[0].id);
   } else {
     applyCanvasDims();
@@ -112,10 +115,19 @@ function processCSV(results) {
 function updateBudget() {
   const tracker = document.getElementById('budget-tracker');
   const sum = itemsOnCanvas.reduce((a, o) => a + o.numPrice, 0);
-  tracker.innerText = `Total: $${sum.toLocaleString()} / $4,500`;
-  tracker.classList.toggle('over', sum > 4500);
+  tracker.innerText = `$${sum.toLocaleString()} of $${budget.toLocaleString()}`;
+  tracker.classList.toggle('over', sum > budget);
+
+  const fill = document.getElementById('budget-fill');
+  const pct = budget > 0 ? Math.min(100, (sum / budget) * 100) : 100;
+  fill.style.width = pct + '%';
+  fill.className = sum > budget ? 'over' : (sum > budget * 0.85 ? 'warn' : '');
+
+  const editBtn = document.getElementById('budget-edit');
+  if(editBtn && !editBtn.querySelector('input')) {
+    editBtn.childNodes[0].textContent = `$${budget.toLocaleString()} `;
+  }
 
   const countEl = document.getElementById('count-tracker');
-  const uniqueAdded = new Set(itemsOnCanvas.map(i => i.id)).size;
-  countEl.innerText = `Added ${uniqueAdded} / ${masterLibrary.length}`;
+  countEl.innerText = `${itemsOnCanvas.length} item${itemsOnCanvas.length === 1 ? '' : 's'} placed`;
 }
