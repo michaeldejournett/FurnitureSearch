@@ -110,6 +110,7 @@ function processCSV(results) {
     renderSidebar(currentFilterMode);
     updateNavActive();
   }
+  autoFitForViewport();
 }
 
 function updateBudget() {

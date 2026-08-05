@@ -57,6 +57,7 @@
 </header>
 
 <div id="layout">
+<div id="drawer-backdrop" onclick="toggleCatalog(false)"></div>
 <aside id="sidebar" aria-label="Furniture catalog">
 
   <section class="budget-card" aria-label="Budget">
@@ -121,7 +122,15 @@
 
 <main id="main" aria-label="Floor plan workspace">
   <div id="canvas-scroll">
-    <div id="canvas-container"></div>
+    <div id="canvas-stage">
+      <div id="canvas-container"></div>
+    </div>
+  </div>
+
+  <div id="zoom-controls" aria-label="Zoom">
+    <button onclick="zoomOut()" title="Zoom out" aria-label="Zoom out">&minus;</button>
+    <button id="zoom-level" onclick="fitZoom()" title="Fit floor plan to screen">100%</button>
+    <button onclick="zoomIn()" title="Zoom in" aria-label="Zoom in">+</button>
   </div>
 
   <div class="instruction-toast" id="toast" role="status" aria-live="polite">Drag to move &bull; Click to select &bull; R rotates &bull; Backspace deletes &bull; Ctrl+Z undoes</div>

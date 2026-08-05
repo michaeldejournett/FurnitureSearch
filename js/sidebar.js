@@ -115,7 +115,14 @@ function renderSidebar(filterMode) {
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'toggle-btn ' + (isAdded ? 'remove' : 'add');
     toggleBtn.innerText = isAdded ? '✓ On floor' : '+ Add';
-    toggleBtn.onclick = (e) => { e.stopPropagation(); toggleItem(item.id); };
+    toggleBtn.onclick = (e) => {
+      e.stopPropagation();
+      toggleItem(item.id);
+      if(!isAdded && isMobileLayout()) {
+        toggleCatalog(false);
+        actionToast(`${item.text} added to floor`);
+      }
+    };
     bottomDiv.appendChild(toggleBtn);
 
     if(isAdded) {

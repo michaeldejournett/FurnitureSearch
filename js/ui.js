@@ -54,9 +54,40 @@ function helpIsOpen() {
   return !document.getElementById('help-modal').hidden;
 }
 
-function toggleCatalog() {
-  const open = document.body.classList.toggle('catalog-open');
+function toggleCatalog(force) {
+  const open = typeof force === 'boolean'
+    ? document.body.classList.toggle('catalog-open', force)
+    : document.body.classList.toggle('catalog-open');
   document.getElementById('catalog-toggle').setAttribute('aria-expanded', String(open));
+}
+
+function isMobileLayout() {
+  return window.matchMedia('(max-width: 860px)').matches;
+}
+
+/* ── Zoom ── */
+const ZOOM_MIN = 0.35, ZOOM_MAX = 2;
+
+function setZoom(scale) {
+  viewScale = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, scale));
+  applyCanvasDims();
+}
+
+function zoomIn() { setZoom(viewScale + 0.15); }
+function zoomOut() { setZoom(viewScale - 0.15); }
+
+function fitZoom() {
+  const scroll = document.getElementById('canvas-scroll');
+  const style = getComputedStyle(scroll);
+  const availW = scroll.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+  const availH = scroll.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+  if(availW <= 0 || availH <= 0 || !canvasW || !canvasH) return;
+  setZoom(Math.min(availW / canvasW, availH / canvasH, 1));
+}
+
+function autoFitForViewport() {
+  const scroll = document.getElementById('canvas-scroll');
+  if(scroll.clientWidth && canvasW * viewScale > scroll.clientWidth) fitZoom();
 }
 
 function startBudgetEdit() {

@@ -33,7 +33,7 @@ function installBackgroundHandlers() {
   container.addEventListener('click', (e) => {
     if(!calibrating) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    const x = (e.clientX - rect.left) / viewScale, y = (e.clientY - rect.top) / viewScale;
     calibPoints.push({ x, y });
     const svg = ensureCalibSvg();
     const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -45,7 +45,7 @@ function installBackgroundHandlers() {
   container.addEventListener('mousemove', (e) => {
     if(!calibrating || calibPoints.length !== 1) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    const x = (e.clientX - rect.left) / viewScale, y = (e.clientY - rect.top) / viewScale;
     const svg = ensureCalibSvg();
     let line = svg.querySelector('line.rubber');
     if(!line) {

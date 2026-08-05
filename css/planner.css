@@ -33,9 +33,10 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  height: 100dvh;
 }
 
-button { font-family: inherit; cursor: pointer; }
+button { font-family: inherit; cursor: pointer; touch-action: manipulation; }
 input, select { font-family: inherit; }
 
 /* ── Top bar ───────────────────────────────────────────────────── */
@@ -502,12 +503,13 @@ input, select { font-family: inherit; }
   padding: 28px;
 }
 
+#canvas-stage { flex-shrink: 0; }
+
 #canvas-container {
   position: relative;
   background-repeat: no-repeat;
   border-radius: 6px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  flex-shrink: 0;
 }
 
 #canvas-container.calibrating { cursor: crosshair; }
@@ -534,6 +536,44 @@ input, select { font-family: inherit; }
   font-size: 0.74rem;
   text-align: center;
   z-index: 20;
+}
+
+/* Zoom controls */
+#zoom-controls {
+  position: absolute;
+  right: 14px;
+  bottom: 46px;
+  display: flex;
+  background: var(--panel);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  z-index: 40;
+}
+
+#zoom-controls button {
+  min-width: 40px;
+  min-height: 38px;
+  padding: 0 10px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+#zoom-controls button + button { border-left: 1px solid var(--border); }
+#zoom-controls button:hover { color: var(--text); background: var(--panel-2); }
+#zoom-level { font-size: 0.74rem !important; }
+
+/* Drawer backdrop (mobile catalog) */
+#drawer-backdrop {
+  display: none;
+  position: fixed;
+  inset: var(--topbar-h) 0 0 0;
+  background: rgba(4, 8, 16, 0.55);
+  z-index: 75;
 }
 
 /* Action toast */
@@ -563,6 +603,9 @@ input, select { font-family: inherit; }
   position: absolute;
   cursor: grab;
   transform-origin: center center;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .furniture:active { cursor: grabbing; }
@@ -801,8 +844,24 @@ kbd {
 }
 
 @media (max-width: 860px) {
+  :root { --topbar-h: 104px; }
+
   #catalog-toggle { display: inline-flex; }
   #catalog-toggle span { display: inline; }
+
+  /* Two rows: brand + actions on top, plan tabs below */
+  #topbar {
+    gap: 8px;
+    padding: 0 10px;
+    height: var(--topbar-h);
+    flex-wrap: wrap;
+    align-content: center;
+  }
+
+  .brand { order: 0; }
+  #action-bar { order: 1; margin-left: auto; }
+  #catalog-toggle { order: 2; }
+  #nav-controls { order: 3; flex-basis: 100%; }
 
   #sidebar {
     position: fixed;
@@ -820,7 +879,33 @@ kbd {
     box-shadow: 12px 0 40px rgba(0, 0, 0, 0.5);
   }
 
+  body.catalog-open #drawer-backdrop { display: block; }
+
   #canvas-scroll { padding: 12px; }
-  #detail-panel { bottom: 42px; flex-direction: column; align-items: stretch; gap: 8px; }
-  .detail-actions { justify-content: space-between; }
+
+  /* Touch-friendly sizing */
+  .tb-btn { min-height: 40px; }
+  .toggle-btn, .copy-btn { min-height: 40px; padding-inline: 14px; }
+  .chip { min-height: 34px; padding: 6px 13px; }
+  #nav-controls button { min-height: 38px; }
+  .detail-actions button, .detail-actions a { min-height: 42px; flex: 1; justify-content: center; }
+
+  /* Keep zoom clear of the full-width detail panel */
+  #zoom-controls { top: 12px; right: 10px; bottom: auto; }
+  #zoom-controls button { min-height: 44px; min-width: 44px; }
+
+  #detail-panel {
+    bottom: 38px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .instruction-toast { font-size: 0.68rem; padding: 6px 10px; }
+}
+
+@media (max-width: 560px) {
+  .brand-text { display: none; }
+  #catalog-toggle span { display: none; }
 }

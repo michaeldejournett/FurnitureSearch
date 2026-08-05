@@ -88,6 +88,18 @@ function applyCanvasDims() {
   container.style.height = canvasH + 'px';
   container.style.backgroundImage = `url("${currentBgUrl}")`;
   container.style.backgroundSize = '100% 100%';
+  container.style.transform = `scale(${viewScale})`;
+  container.style.transformOrigin = '0 0';
+
+  // The stage reserves the *visual* footprint so scrolling and centering
+  // track the scaled canvas (transforms do not affect layout size).
+  const stage = document.getElementById('canvas-stage');
+  stage.style.width = (canvasW * viewScale) + 'px';
+  stage.style.height = (canvasH * viewScale) + 'px';
+
+  const zoomLabel = document.getElementById('zoom-level');
+  if(zoomLabel) zoomLabel.innerText = Math.round(viewScale * 100) + '%';
+
   document.getElementById('bg-status').innerText = `PPI ${PPI.toFixed(3)} • Canvas ${Math.round(canvasW)}×${Math.round(canvasH)}px`;
 }
 
@@ -146,7 +158,7 @@ function renderCanvasItems() {
 
     el.appendChild(label);
 
-    el.addEventListener('mousedown', (e) => {
+    el.addEventListener('pointerdown', (e) => {
       if(calibrating) return;
       dragElement = el;
       dragStartSnapshot = JSON.stringify(itemsOnCanvas);
@@ -154,6 +166,7 @@ function renderCanvasItems() {
       offsetY = e.clientY - el.getBoundingClientRect().top;
       selectItem(item.uuid);
       e.stopPropagation();
+      e.preventDefault();
     });
 
     canvas.appendChild(el);
@@ -167,16 +180,17 @@ function renderCanvasItems() {
 }
 
 function installDragHandlers() {
-  document.addEventListener('mousemove', (e) => {
+  document.addEventListener('pointermove', (e) => {
     if (!dragElement) return;
     const cCont = document.getElementById('canvas-container').getBoundingClientRect();
-    let x = e.clientX - cCont.left - offsetX;
-    let y = e.clientY - cCont.top - offsetY;
+    // Client coordinates are in visual (scaled) pixels; item positions are logical.
+    let x = (e.clientX - cCont.left - offsetX) / viewScale;
+    let y = (e.clientY - cCont.top - offsetY) / viewScale;
     dragElement.style.left = x + 'px'; dragElement.style.top = y + 'px';
     const item = itemsOnCanvas.find(i => i.uuid === dragElement.id);
     if(item) { item.x = x; item.y = y; }
   });
-  document.addEventListener('mouseup', () => {
+  document.addEventListener('pointerup', () => {
     if(dragElement) {
       if(dragStartSnapshot) {
         const before = dragStartSnapshot;
@@ -188,5 +202,9 @@ function installDragHandlers() {
       saveState();
     }
   });
-  document.getElementById('main').addEventListener('mousedown', () => { if(!calibrating) selectItem(null); });
+  document.getElementById('main').addEventListener('pointerdown', (e) => {
+    if(calibrating) return;
+    if(e.target.closest('#detail-panel, #zoom-controls, .instruction-toast')) return;
+    selectItem(null);
+  });
 }

@@ -22,6 +22,7 @@ let budget = DEFAULT_BUDGET;
 let searchQuery = '';
 let roomFilter = 'All';
 let sortMode = 'default';
+let viewScale = 1;
 
 let history = [];
 

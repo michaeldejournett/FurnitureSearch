@@ -37,4 +37,15 @@ window.addEventListener('keydown', (e) => {
 installDragHandlers();
 installBackgroundHandlers();
 installUIHandlers();
+
+if(window.matchMedia('(pointer: coarse)').matches) {
+  showToast('Tap to select • Drag to move • Use the panel below the plan to rotate or remove');
+}
+
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(autoFitForViewport, 200);
+});
+
 autoLoadCSV();
